@@ -33,19 +33,6 @@
                <p>Calcule seu IMC de forma simples e rápida.
                <p>
                <hr>
-               <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                  <label class="form-check-label" for="inlineRadio1">Masculino</label>
-               </div>
-               <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                  <label class="form-check-label" for="inlineRadio2">Feminino</label>
-               </div>
-               <hr>
-               <div class="form-group">
-                  <label for="idade">Idade (anos)</label>
-                  <input type="text" class="form-control" id="idade">
-               </div>
                <div class="form-group">
                   <label for="altura">Altura (m)</label>
                   <input type="text" class="form-control" id="altura">
@@ -55,11 +42,72 @@
                   <input type="text" class="form-control" id="peso">
                </div>
                <hr>
-               <button type="button" class="btn btn-primary" style="width: 100%;">Calcular</button>
+               <button type="button" class="btn btn-primary btn-calcular" style="width: 100%;">Calcular</button>
             </form>
          </div>
       </div>
       <script src="http://code.jquery.com/jquery.min.js"></script>
       <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      <script>
+      
+      	$(document).delegate('.btn-calcular', 'click', function ()
+      	{
+      		var _idade = $('#idade').val();
+      		var _altura = $('#altura').val();
+      		var _peso = $('#peso').val();
+      		var _imc = _peso/(_altura * _altura);
+      		var _class = '';
+      		var _texto = '';
+      		var _descricao = '';
+      		
+      		switch(true)
+      		{
+      			case _imc < 16:
+      				_class = 'error';
+      				_texto = 'Baixo peso muito grave';
+      				_descricao = 'Seu IMC está abaixo de 16 kg/m²';
+      				break;
+  				case _imc < 17:
+      				_class = 'error';
+      				_texto = 'Baixo peso grave';
+      				_descricao = 'Seu IMC está entre 16 e 17 kg/m²';
+      				break;
+  				case _imc < 18.5:
+      				_class = 'warning';
+      				_texto = 'Baixo peso';
+      				_descricao = 'Seu IMC está entre 17 e 18.5 kg/m²';
+      				break;
+  				case _imc < 25:
+      				_class = 'success';
+      				_texto = 'Peso normal';
+      				_descricao = 'Seu IMC está entre 18.5 e 25 kg/m²';
+      				break;
+  				case _imc < 30:
+      				_class = 'warning';
+      				_texto = 'Sobrepeso';
+      				_descricao = 'Seu IMC está entre 25 e 30 kg/m²';
+      				break;
+  				case _imc < 35:
+      				_class = 'error';
+      				_texto = 'Obesidade grau I';
+      				_descricao = 'Seu IMC está entre 30 e 35 kg/m²';
+      				break;
+  				case _imc < 40:
+      				_class = 'error';
+      				_texto = 'Obesidade grau II';
+      				_descricao = 'Seu IMC está entre 35 e 40 kg/m²';
+      				break;
+  				case _imc >= 40:
+      				_class = 'error';
+      				_texto = 'Obesidade grau III (obesidade mórbida)';
+      				_descricao = 'Seu IMC está superior a 40 kg/m²';
+      				break;
+      		}
+      		
+      		swal(_texto + ' (' + _imc.toFixed(2) + ' kg/m²)', _descricao, _class);
+      	});
+      
+      </script>
    </body>
 </html>
